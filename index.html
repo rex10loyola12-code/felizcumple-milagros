@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Para Milagros 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#f08fb0;--deep:#c2417a;--lilac:#e9d8fb;--cream:#fff8ee;--ink:#4a2a3a;--gold:#d99a3a;
+  --mono:'Fira Code',ui-monospace,Consolas,monospace;
+  --hand:'Caveat','Segoe Script','Bradley Hand',cursive;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:system-ui,Arial,sans-serif;
+  background:linear-gradient(160deg,#fff1f5,#f3e8ff 55%,#ffeede);background-color:#fff1f5;overflow-x:hidden}
+.screen{min-height:100vh;display:none;align-items:center;justify-content:center;padding:20px;position:relative;z-index:2}
+.screen.on{display:flex;animation:fade .7s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+#fx span{position:absolute;opacity:0;will-change:transform}
+#fx .up{bottom:-40px;animation:up linear infinite}
+#fx .rain{top:-40px;animation:rain linear forwards}
+@keyframes up{0%{transform:translateY(0) rotate(0);opacity:0}15%{opacity:.8}100%{transform:translateY(-110vh) rotate(40deg);opacity:0}}
+@keyframes rain{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(360deg);opacity:.9}}
+
+.card{width:min(460px,100%);background:rgba(255,255,255,.75);border:1px solid #f4cfe0;border-radius:20px;padding:26px 22px;box-shadow:0 10px 30px rgba(194,65,122,.15)}
+.bar{display:flex;gap:6px;margin-bottom:14px}
+.bar i{width:10px;height:10px;border-radius:50%;background:#ff8fa3}
+.bar i:nth-child(2){background:#ffd27d}.bar i:nth-child(3){background:#b5e8b0}
+.term{font:.82rem var(--mono);color:var(--deep);margin:0 0 12px;min-height:1.2em}
+.step{font:.75rem var(--mono);opacity:.7;margin-bottom:8px}
+.q{font-size:1.2rem;line-height:1.4;margin:0 0 14px}
+input{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid #e7bcd1;background:#fff;color:var(--ink);font:1rem var(--mono);outline:none}
+input:focus{border-color:var(--deep)}
+.btn{margin-top:14px;width:100%;padding:13px;border:0;border-radius:12px;font:600 1rem system-ui,Arial;color:#fff;background:linear-gradient(90deg,var(--pink),var(--deep));cursor:pointer}
+.btn:active{transform:scale(.98)}
+.hint{font-size:.85rem;color:var(--deep);min-height:1.2em;margin-top:10px}
+.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+h2.t{font:700 2.3rem var(--hand);margin:0 0 6px;color:var(--deep);text-align:center}
+.sub{text-align:center;margin:0 0 22px;opacity:.8}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:min(420px,100%);margin:0 auto}
+.menu button{border:0;border-radius:18px;padding:22px 10px;background:#fff;cursor:pointer;font:600 1rem system-ui,Arial;color:var(--ink);box-shadow:0 6px 16px rgba(194,65,122,.18);transition:transform .2s}
+.menu button:hover{transform:translateY(-4px) rotate(-1deg)}
+.menu b{display:block;font-size:2.4rem;margin-bottom:6px}
+.back{background:none;border:0;color:var(--deep);font:600 .95rem system-ui;cursor:pointer;margin:0 0 14px;padding:0}
+.wrap{width:min(460px,100%);text-align:center}
+
+/* sobre */
+.env{position:relative;width:min(320px,82vw);height:210px;margin:30px auto 0;cursor:pointer;animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+.env.open{animation:none}
+.env .bk{position:absolute;inset:0;background:#e79bbb;border-radius:6px}
+.env .lt{position:absolute;left:7%;width:86%;top:8%;height:80%;background:var(--cream);border-radius:4px;transition:transform .9s ease .45s}
+.env.open .lt{transform:translateY(-70%)}
+.env .fr{position:absolute;inset:0;z-index:3;background:#f7bdd3;clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);border-radius:6px}
+.env .fl{position:absolute;left:0;top:0;width:100%;height:55%;z-index:4;background:#f08fb0;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .5s ease,z-index 0s .25s}
+.env.open .fl{transform:rotateX(180deg);z-index:1}
+.seal{position:absolute;left:50%;top:42%;z-index:5;width:46px;height:46px;margin-left:-23px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:24px;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:opacity .3s}
+.env.open .seal{opacity:0}
+.tap{margin-top:30px;font:.8rem var(--mono);color:var(--deep);animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.3}}
+
+/* carta */
+#letterScreen{align-items:flex-start;padding:22px 14px 60px}
+.paper{width:min(600px,100%);margin:auto;background:var(--cream);border-radius:8px;padding:38px 24px 26px 26px;position:relative;box-shadow:0 16px 44px rgba(194,65,122,.3);
+  background-image:repeating-linear-gradient(transparent 0 31px,rgba(240,143,176,.28) 31px 32px);animation:rise .9s ease both;border-top:8px solid var(--pink)}
+@keyframes rise{from{opacity:0;transform:translateY(60px) scale(.95)}to{opacity:1;transform:none}}
+.paper h1{font:700 2.3rem var(--hand);margin:0 0 10px;color:var(--deep)}
+.paper p.l{font:500 1.35rem/32px var(--hand);margin:0 0 32px;opacity:0;animation:fade .8s ease forwards}
+.corner{position:absolute;right:10px;top:-6px;font-size:2.2rem}
+.sign{text-align:right;font:700 1.7rem var(--hand);color:var(--deep);opacity:0;animation:fade .8s ease forwards}
+.foot{margin-top:16px;font:.72rem var(--mono);color:#a07a8c}
+
+/* ramo y deseos */
+.flowers{display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:10px 0 18px}
+.flowers button{font-size:2.7rem;background:none;border:0;cursor:pointer;transition:transform .3s;padding:4px}
+.flowers button:hover{transform:scale(1.2) rotate(8deg)}
+.flowers button.pop{animation:pop .5s}
+@keyframes pop{50%{transform:scale(1.5) rotate(-12deg)}}
+.msg{min-height:3.2em;font:700 1.7rem/1.2 var(--hand);color:var(--deep);text-align:center}
+.wishes{display:grid;gap:12px;margin-top:10px}
+.wish{perspective:600px;height:92px;cursor:pointer}
+.wish div{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.wish.f div{transform:rotateY(180deg)}
+.wish span{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;display:grid;place-items:center;padding:10px;text-align:center}
+.wish .a{background:linear-gradient(90deg,var(--pink),var(--deep));color:#fff;font-size:1.1rem;font-weight:600}
+.wish .b{background:#fff;transform:rotateY(180deg);font:600 1.4rem/1.15 var(--hand);color:var(--deep);box-shadow:inset 0 0 0 2px var(--pink)}
+.big{font:700 2rem/1.15 var(--hand);color:var(--deep);margin:20px 0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.paper p.l,.sign{opacity:1}}
+</style>
+</head>
+<body>
+<div id="fx"></div>
+
+<!-- VALIDACIÓN -->
+<section class="screen on" id="gateS">
+  <div class="card" id="gate">
+    <div class="bar"><i></i><i></i><i></i></div>
+    <p class="term" id="term"></p>
+    <div class="step" id="step"></div>
+    <p class="q" id="q"></p>
+    <input id="ans" type="text" autocomplete="off" placeholder="escribe tu respuesta...">
+    <button class="btn" id="go">Verificar ▸</button>
+    <div class="hint" id="hint"></div>
+  </div>
+</section>
+
+<!-- MENÚ -->
+<section class="screen" id="menuS">
+  <div class="wrap">
+    <h2 class="t">Hola, Milagros 🌷</h2>
+    <p class="sub">Identidad confirmada ✔ — elige una opción</p>
+    <div class="menu">
+      <button data-go="envS"><b>💌</b>Mi carta</button>
+      <button data-go="bouqS"><b>💐</b>Tu ramo</button>
+      <button data-go="wishS"><b>🎁</b>Tres deseos</button>
+      <button id="sur"><b>🎉</b>Sorpresa</button>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="screen" id="envS">
+  <div class="wrap">
+    <button class="back" data-go="menuS">← Menú</button>
+    <h2 class="t">Tienes una carta</h2>
+    <div class="env" id="env"><div class="bk"></div><div class="lt"></div><div class="fr"></div><div class="fl"></div><div class="seal">🌸</div></div>
+    <div class="tap">&gt; haz clic en el sobre_</div>
+  </div>
+</section>
+
+<!-- CARTA -->
+<section class="screen" id="letterS">
+  <article class="paper">
+    <span class="corner">🌸</span>
+    <button class="back" data-go="menuS">← Menú</button>
+    <h1>¡Feliz cumpleaños, Milagros! 🌼</h1>
+    <div id="body"></div>
+    <p class="sign" id="sign"></p>
+    <div class="foot">&lt;/&gt; compilado con cariño por Stephano</div>
+  </article>
+</section>
+
+<!-- RAMO -->
+<section class="screen" id="bouqS">
+  <div class="wrap">
+    <button class="back" data-go="menuS">← Menú</button>
+    <h2 class="t">Tu ramo 💐</h2>
+    <p class="sub">Toca cada flor</p>
+    <div class="flowers" id="flowers"></div>
+    <div class="msg" id="msg"></div>
+  </div>
+</section>
+
+<!-- DESEOS -->
+<section class="screen" id="wishS">
+  <div class="wrap">
+    <button class="back" data-go="menuS">← Menú</button>
+    <h2 class="t">Tres deseos 🎁</h2>
+    <p class="sub">Toca para descubrirlos</p>
+    <div class="wishes" id="wishes"></div>
+  </div>
+</section>
+
+<!-- SORPRESA -->
+<section class="screen" id="surS">
+  <div class="wrap">
+    <button class="back" data-go="menuS">← Menú</button>
+    <div style="font-size:4rem">🎂</div>
+    <div class="big">¡18 años de una chica increíble!</div>
+    <button class="btn" id="again">Más pétalos 🌸</button>
+  </div>
+</section>
+
+<script>
+const CFG={
+  preguntas:[
+    {q:"¿De qué color es tu gato?",r:["anaranjado","naranja"],p:"Pista: color de zanahoria 🥕"},
+    {q:"¿Qué carrera estudias?",r:["obstetricia"],p:"Pista: cuidas vidas desde el inicio 👶"},
+    {q:"¿Cómo te llamaba yo mucho antes?",r:["ines","minion","especial","chiken little","chicken little"],p:"Pista: tengo varios apodos para ti 😄"}
+  ],
+  parrafos:[
+    "Milagros, en este día tan especial quiero que sepas lo única y especial que eres para todos y sobre todo para mí, gracias por siempre brindarme tu apoyo, por escucharme y darme algunos consejos, sabes que siempre puedes confiar en mí como yo sé que puedo confiar en ti, eres mi mejor amiga y siempre te deseo lo mejor, siempre me alegraré por tus logros.",
+    "Desde que empezamos a hablar en el colegio nos volvimos muy cercanos y hemos creado un gran lazo de amistad, gracias por siempre estar para mí y escucharme cuando necesitaba ser escuchado, considero que es un regalo de la vida haberte conocido y de eso siempre te agradezco, eres una excelente amiga, hermana e hija, nunca cambies; sabes que si en algún momento necesitas ser escuchada nunca dudes en escribirme, yo estaré ahí para apoyarte.",
+    "Eres una excelente chica, estudiosa, inteligente, cariñosa, atenta y me quedaría escribiendo adjetivos pero nunca terminaría. Muchas veces soy reservado con las personas o simplemente no demuestro mucho afecto, además de que cosas de mi vida no se las cuento a nadie, quiero que sepas que eres de las pocas personas que sabe de mí, y de eso no me arrepiento en lo absoluto.",
+    "Extraño compartir salón juntos, irte a molestar entre clases, pero ahora estás en una nueva etapa de tu vida, cumples 18 años, y en esta nueva etapa te deseo y te seguiré deseando lo mejor. Sé que terminarás tu carrera y yo estaré ahí en primera fila aplaudiendo, nunca te des por vencida, por más alta que parezca la montaña siempre hay un camino a la cima, sabes que cuentas con todo mi apoyo y te deseo lo mejor, que pases un feliz cumpleaños acompañada de tu familia y seres queridos."
+  ],
+  firma:"Atte: Stephano",
+  flores:[["🌹","Eres única y especial"],["🌷","Gracias por escucharme siempre"],["🌻","Estudiosa, inteligente y cariñosa"],["🌼","Nunca te des por vencida"],["🪻","Siempre cuentas conmigo"]],
+  deseos:[["Éxito 🎓","Que termines tu carrera y yo aplaudiendo en primera fila"],["Alegría 🌻","Que tus días estén llenos de risas y buenos momentos"],["Familia 🌷","Que siempre estés rodeada de quienes más quieres"]]
+};
+const $=id=>document.getElementById(id);
+const norm=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñ ]/g,"").trim();
+const show=id=>{document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$(id).classList.add("on");window.scrollTo(0,0);
+  if(id==="envS")$("env").classList.remove("open");};
+document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
+
+// flores flotantes
+const FX=$("fx"),ic=["🌸","🌷","🌼","🌺"];
+for(let i=0;i<10;i++){const s=document.createElement("span");s.className="up";s.textContent=ic[i%4];
+  s.style.left=Math.random()*95+"%";s.style.fontSize=(14+Math.random()*14)+"px";
+  s.style.animationDuration=(10+Math.random()*8)+"s";s.style.animationDelay=(-Math.random()*16)+"s";FX.appendChild(s);}
+
+function typeTo(el,t){el.textContent="";let i=0;const k=setInterval(()=>{el.textContent+=t[i++]||"";if(i>=t.length)clearInterval(k)},35)}
+
+// validación
+let n=0;
+function ask(){const p=CFG.preguntas[n];$("step").textContent=`pregunta ${n+1}/${CFG.preguntas.length}`;
+  $("q").textContent=p.q;$("ans").value="";$("hint").textContent="";$("ans").focus();}
+function check(){
+  const p=CFG.preguntas[n],v=norm($("ans").value);
+  if(v&&p.r.some(r=>norm(r)===v||v.includes(norm(r)))){n++;n>=CFG.preguntas.length?show("menuS"):ask();}
+  else{$("gate").classList.remove("shake");void $("gate").offsetWidth;$("gate").classList.add("shake");$("hint").textContent="Acceso denegado ✖ "+p.p;}
+}
+$("go").onclick=check;
+$("ans").addEventListener("keydown",e=>{if(e.key==="Enter")check()});
+
+// sobre -> carta
+$("env").onclick=function(){
+  if(this.classList.contains("open"))return;
+  this.classList.add("open");
+  setTimeout(()=>{
+    $("body").innerHTML=CFG.parrafos.map((t,i)=>`<p class="l" style="animation-delay:${.8+i*1.2}s">${t}</p>`).join("");
+    $("sign").style.animationDelay=(.8+CFG.parrafos.length*1.2)+"s";$("sign").textContent=CFG.firma;
+    show("letterS");
+  },1700);
+};
+
+// ramo
+CFG.flores.forEach(([e,t])=>{const b=document.createElement("button");b.textContent=e;
+  b.onclick=()=>{b.classList.remove("pop");void b.offsetWidth;b.classList.add("pop");$("msg").textContent=t;};$("flowers").appendChild(b);});
+
+// deseos
+CFG.deseos.forEach(([a,b])=>{const d=document.createElement("div");d.className="wish";
+  d.innerHTML=`<div><span class="a">${a}</span><span class="b">${b}</span></div>`;d.onclick=()=>d.classList.toggle("f");$("wishes").appendChild(d);});
+
+// sorpresa: lluvia de pétalos (se limpia sola)
+function rain(){const e=["🌸","🌷","🌼","🌺","🌻"];
+  for(let i=0;i<24;i++){const s=document.createElement("span");s.className="rain";s.textContent=e[i%5];
+    s.style.left=Math.random()*95+"%";s.style.fontSize=(18+Math.random()*16)+"px";
+    s.style.animationDuration=(4+Math.random()*3)+"s";s.style.animationDelay=(Math.random()*2)+"s";
+    FX.appendChild(s);setTimeout(()=>s.remove(),8000);}}
+$("sur").onclick=()=>{show("surS");rain();};
+$("again").onclick=rain;
+
+typeTo($("term"),"> verificando identidad...");
+ask();
+console.log("%c🌸 hecho con código por Stephano","color:#c2417a;font-size:14px");
+</script>
+</body>
+</html>
